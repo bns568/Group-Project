@@ -67,8 +67,8 @@ console.log(funcQuestionArray);
 //creating a function that populates question on the html page
 let questionPopulate= function(){
     // Zach mentioned it is better not to run a for loop here. Only run a for loop if we wanted all the questions to populate at once on the page. Since we want the user to answer one question at at time before the next one shows then it is better to access the "questions" propoerty of the questions object  using the index of that object in the array. 
-    
-        questionsAppear.innerText = funcQuestionArray[0].questions
+        questionsAppear.innerText = funcQuestionArray [0].questions
+        
 }
 questionPopulate();
 
@@ -156,6 +156,5 @@ let incorrect_Clicked = function(e) {
  answersAppear[3].addEventListener('click',incorrect_Clicked)
 
 // //creating a code to run the next question in the array when the click "Next question" button is clicked
-next.addEventListener('click', )
 
 //==============================

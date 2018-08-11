@@ -2,13 +2,14 @@
 //==================================GLOBAL VARIABLES DECLARATION & ASSIGNMENT===============================
 //creating an array that stores the questions for the topic 'functions'
 funcQuestionArray= [];
+console.log(funcQuestionArray)
 
 
 //assigning my HTLML element to a variable that holds the spot for the question
 let questionsAppear = document.getElementById('populateQuestions')
 
 
-//assigning my HTML elements with attribute class to a variable that will hold the list of answer choice
+//assigning my HTML elements with attribute class to a variable that will hold the list of answer choice.
 let answersAppear = document.getElementsByClassName('answerChoice')
 console.log(answersAppear)
 
@@ -16,26 +17,40 @@ console.log(answersAppear)
 //creating a variable that will hold the HTML element which displays response to user after they click
 let responseAppear = document.getElementById('response')
 
+//creating a variable that will hold the HTML element which displays response to user after they click the "Next Question" button 
+
+
+
+// creating a varibale that stores the array of when user clicks of the times user clicks on correct choice
+let correctAnswerChosen = [];
+console.log(correctAnswerChosen);
+
+// creating a varibale that stores the array of when user clicks of the times user click on incorrect choice
+let incorrectAnswerChosen = [];
+console.log(incorrectAnswerChosen);
+
+
 
 
 
 //=====================================OBJECT CONSTRUCTOR & INSTANCES=======================================
 
 //creating an object constructor with properties and method for the questions
-let quizQuestions = function(topics,questions,answerOptions, correct_answers, incorrect_answers,response)
+let quizQuestions = function(topics,questions,answerOptions,correct_answers,response,correctAnswerClicked,incorrectAnswerClicked)
 {
     this.topics = topics,
     this.questions =questions,
     // this.userAnswers = userAnswers -- 
     this.answerOptions= answerOptions;
     this.correct_answers= correct_answers;
-    this.incorrect_answers = incorrect_answers;
     this.response=response
+    this.correctAnswerClicked= correctAnswerClicked
+    this.incorrectAnswerClicked=incorrectAnswerClicked
 }
 
-questions_Functions1= new quizQuestions( 'Function','JS does not execute a code block in a function unless the function is________?',['invoke','define','construct','declare'],0,[1,2,3],['correct','incorrect'])
+questions_Functions1= new quizQuestions( 'Function','JS does not execute a code block in a function unless the function is________?',['invoke','define','construct','declare'], null, ['correct','incorrect'],0,0)
 
-questions_Functions2= new quizQuestions( 'Function',' An invoked function is the________ thing the JS interpreter executes when a page load.',[' first','final','second','third'],0,[1,2,3],['correct','incorrect'])
+questions_Functions2= new quizQuestions( 'Function',' An invoked function is the________ thing the JS interpreter executes when a page load.',[' first','final','second','third'],null,['correct','incorrect'],0,0)
 
 console.log(questions_Functions1)
 console.log(questions_Functions2)
@@ -47,21 +62,21 @@ console.log(funcQuestionArray);
 
 
 
-//=====================================POPULATION DOM DYNAMICALLY===========================================
+//=====================================POPULATINg DOM DYNAMICALLY===========================================
 
 //creating a function that populates question on the html page
 let questionPopulate= function(){
-    // for(let i=0;i<funcQuestionArray.length;i++){    --- this for loop is needed for dynamically loop to our array of function questions objects, but I am not able to make it work right now. Insted of putting funcQuestionArray[i] below, i put funcQuestionArray[0].questions, just to make it work on the HTML page.
+    // Zach mentioned it is better not to run a for loop here. Only run a for loop if we wanted all the questions to populate at once on the page. Since we want the user to answer one question at at time before the next one shows then it is better to access the "questions" propoerty of the questions object  using the index of that object in the array. 
     
         questionsAppear.innerText = funcQuestionArray[0].questions
 }
 questionPopulate();
 
-//creating a function to randomized the answer options (not part of the MVP)
+//Placeholder for creating a function to randomize the answer options each time they appear (not part of the MVP)
 
-//creating a function that will populate the answer option property in the function questions object
+//creating a function that will populate the "answer options" property
 let answersChoices = function(){
-    //again the below is working but i need to know how to run this in a loop.
+    //since "answerAppear" was assigned a class name, then we can use it as an array. class attribute acts an array.
     for (let i=0;i<answersAppear.length;i++){
     answersAppear[i].innerText=funcQuestionArray[0].answerOptions[i]
     }
@@ -71,35 +86,76 @@ answersChoices();
 
 
 
-//==============================FUNCTIONS FOR EVENT HANDLERS================================
-//Function that will give the "correct" response when the correct choice is clicked
+//===================================FUNCTIONS FOR EVENT HANDLERS ==========================================
+
+
+
+//Function that will give the  response "correct" when the correct choice is clicked + score property (boolean)
 let correctResponse = function(){
-    responseAppear.innerText= 'correct'
+        responseAppear.innerText= funcQuestionArray[0].response[0]
+        funcQuestionArray[0].correct_answers= true 
+        correctAnswerChosen.push(funcQuestionArray[0].correct_answers)
+
 }
 
-//Function that will give the "incorrect" response when the incorrect choice is clicked
+//Function that will give the response "incorrect" when the incorrect choice is clicked + score property (boolean)
 let incorrectResponse = function(){
-    responseAppear.innerText= 'incorrect'
+    responseAppear.innerText= funcQuestionArray[0].response[1]
+    funcQuestionArray[0].correct_answers= false
+    incorrectAnswerChosen.push(funcQuestionArray[0].correct_answers)
+
+}
+//creating function that makes "Next Button" appear after an answer is clicked
+let showButton = function(){
+    if(funcQuestionArray[0].correctAnswerClicked==1 || funcQuestionArray[0].incorrectAnswerClicked ==1){
+        let questionHolder = document.getElementById('buttonHolder')
+        let questionButton= document.createElement('button')
+        questionHolder.appendChild(questionButton)
+        questionButton.innerText = 'Next Question'   
+    }
 }
 
 
-//============================EVENT HANDLERS================================================================
+//function for not allowing the user to choose an answer more than once. The placement of this may be off, just because at this point of reading the script, you have not gotten to the event yet. 
+let oneChoice =function(){
+    answersAppear[0].removeEventListener('click',correct_Clicked)
+    answersAppear[1].removeEventListener('click',incorrect_Clicked)
+    answersAppear[2].removeEventListener('click',incorrect_Clicked)
+    answersAppear[3].removeEventListener('click',incorrect_Clicked)
+}
+
+
+
+//===================================EVENT HANDLERS==============================
 
 //Event hanfdler for correct response
 let correct_Clicked = function(e) {
     correctResponse();
+    oneChoice();
+    funcQuestionArray[0].correctAnswerClicked= funcQuestionArray[0].correctAnswerClicked + 1
+    showButton();
+
 }   
 
 
 //Event handler for incorrect responses
 let incorrect_Clicked = function(e) {
     incorrectResponse();
+    oneChoice();
+    funcQuestionArray[0].incorrectAnswerClicked=funcQuestionArray[0].incorrectAnswerClicked +1
+    showButton();
+
 }   
 
-//=====================================FIRING EVENTS + EXECUTION============================================
+
+//=====================================FIRING EVENTS + EXECUTION=========================================
 // creating an code to run when the event click is fired in my HTML
  answersAppear[0].addEventListener('click',correct_Clicked)
  answersAppear[1].addEventListener('click',incorrect_Clicked)
  answersAppear[2].addEventListener('click',incorrect_Clicked)
  answersAppear[3].addEventListener('click',incorrect_Clicked)
 
+// //creating a code to run the next question in the array when the click "Next question" button is clicked
+next.addEventListener('click', )
+
+//==============================

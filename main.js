@@ -156,5 +156,4 @@ let incorrect_Clicked = function(e) {
  answersAppear[3].addEventListener('click',incorrect_Clicked)
 
 // //creating a code to run the next question in the array when the click "Next question" button is clicked
-
 //==============================

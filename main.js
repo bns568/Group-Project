@@ -17,15 +17,15 @@ console.log(answersAppear)
 //creating a variable that will hold the HTML element which displays response to user after they click
 let responseAppear = document.getElementById('response')
 
-//creating a variable that will hold the HTML element which displays response to user after they click the "Next Question" button 
+//creating a variable that will hold the index that will track which questions we ar on
+let index=0
 
 
-
-// creating a varibale that stores the array of when user clicks of the times user clicks on correct choice
+// creating a varibale that stores an array boolean values (true) when user clicks on correct choice
 let correctAnswerChosen = [];
 console.log(correctAnswerChosen);
 
-// creating a varibale that stores the array of when user clicks of the times user click on incorrect choice
+// creating a varibale that stores an array boolean values (false) when user clicks on incorrect choice
 let incorrectAnswerChosen = [];
 console.log(incorrectAnswerChosen);
 
@@ -52,6 +52,8 @@ questions_Functions1= new quizQuestions( 'Function','JS does not execute a code 
 
 questions_Functions2= new quizQuestions( 'Function',' An invoked function is the________ thing the JS interpreter executes when a page load.',[' first','final','second','third'],null,['correct','incorrect'],0,0)
 
+
+
 console.log(questions_Functions1)
 console.log(questions_Functions2)
 
@@ -62,12 +64,26 @@ console.log(funcQuestionArray);
 
 
 
+//==========================================Index for tracking what questions we are on======================================================
+
+//this for loop will run through the length of the array. The "index variable" will keep track of what question we are on and we will pass this variable whereever I have pased an index in the questions array
+
+    for(let i=0;i<funcQuestionArray.length;i++){
+        index = funcQuestionArray.indexOf(funcQuestionArray[i])
+        console.log(index)
+        }   
+        
+    
+    
+
+
+
 //=====================================POPULATINg DOM DYNAMICALLY===========================================
 
 //creating a function that populates question on the html page
 let questionPopulate= function(){
     // Zach mentioned it is better not to run a for loop here. Only run a for loop if we wanted all the questions to populate at once on the page. Since we want the user to answer one question at at time before the next one shows then it is better to access the "questions" propoerty of the questions object  using the index of that object in the array. 
-        questionsAppear.innerText = funcQuestionArray [0].questions
+        questionsAppear.innerText = funcQuestionArray[0].questions
         
 }
 questionPopulate();

@@ -66,7 +66,7 @@ console.log(funcQuestionArray);
 
 //==========================================Index for tracking what questions we are on======================================================
 
-//this for loop will run through the length of the array. The "index variable" will keep track of what question we are on and we will pass this variable whereever I have pased an index in the questions array
+//this for loop will run through the length of the array. The "index" variable, declared above, will keep track of what question we are on, and we will pass this variable whereever we need to pass an index to the questions array
 
     for(let i=0;i<funcQuestionArray.length;i++){
         index = funcQuestionArray.indexOf(funcQuestionArray[i])
@@ -83,7 +83,7 @@ console.log(funcQuestionArray);
 //creating a function that populates question on the html page
 let questionPopulate= function(){
     // Zach mentioned it is better not to run a for loop here. Only run a for loop if we wanted all the questions to populate at once on the page. Since we want the user to answer one question at at time before the next one shows then it is better to access the "questions" propoerty of the questions object  using the index of that object in the array. 
-        questionsAppear.innerText = funcQuestionArray[0].questions
+        questionsAppear.innerText = funcQuestionArray[index].questions
         
 }
 questionPopulate();
@@ -94,7 +94,7 @@ questionPopulate();
 let answersChoices = function(){
     //since "answerAppear" was assigned a class name, then we can use it as an array. class attribute acts an array.
     for (let i=0;i<answersAppear.length;i++){
-    answersAppear[i].innerText=funcQuestionArray[0].answerOptions[i]
+    answersAppear[i].innerText=funcQuestionArray[index].answerOptions[i]
     }
 }
 answersChoices();
@@ -108,8 +108,8 @@ answersChoices();
 
 //Function that will give the  response "correct" when the correct choice is clicked + score property (boolean)
 let correctResponse = function(){
-        responseAppear.innerText= funcQuestionArray[0].response[0]
-        funcQuestionArray[0].correct_answers= true 
+        responseAppear.innerText= funcQuestionArray[index].response[0]
+        funcQuestionArray[index].correct_answers= true 
         correctAnswerChosen.push(funcQuestionArray[0].correct_answers)
 
 }

@@ -50,7 +50,7 @@ let quizQuestions = function(topics,questions,answerOptions,correct_answers,resp
 
 questions_Functions1= new quizQuestions( 'Function','JS does not execute a code block in a function unless the function is________?',['invoke','define','construct','declare'], null, ['correct','incorrect'],0,0)
 
-questions_Functions2= new quizQuestions( 'Function',' An invoked function is the________ thing the JS interpreter executes when a page load.',[' first','final','second','third'],null,['correct','incorrect'],0,0)
+questions_Functions2= new quizQuestions( 'Function',' An invoked function is the________ thing the JS interpreter executes when a page loads.',[' first','final','second','third'],null,['correct','incorrect'],0,0)
 
 
 
@@ -66,12 +66,12 @@ console.log(funcQuestionArray);
 
 //==========================================Index for tracking what questions we are on======================================================
 
-//this for loop will run through the length of the array. The "index" variable, declared above, will keep track of what question we are on, and we will pass this variable whereever we need to pass an index to the questions array
+//The "index" variable, declared above, will keep track of what question we are on, and we will pass this variable whereever we need to pass an index to the questions array
 
     for(let i=0;i<funcQuestionArray.length;i++){
         index = funcQuestionArray.indexOf(funcQuestionArray[i])
         console.log(index)
-        }   
+    }
         
     
     
@@ -110,20 +110,20 @@ answersChoices();
 let correctResponse = function(){
         responseAppear.innerText= funcQuestionArray[index].response[0]
         funcQuestionArray[index].correct_answers= true 
-        correctAnswerChosen.push(funcQuestionArray[0].correct_answers)
+        correctAnswerChosen.push(funcQuestionArray[index].correct_answers)
 
 }
 
 //Function that will give the response "incorrect" when the incorrect choice is clicked + score property (boolean)
 let incorrectResponse = function(){
-    responseAppear.innerText= funcQuestionArray[0].response[1]
-    funcQuestionArray[0].correct_answers= false
-    incorrectAnswerChosen.push(funcQuestionArray[0].correct_answers)
+    responseAppear.innerText= funcQuestionArray[index].response[1]
+    funcQuestionArray[index].correct_answers= false
+    incorrectAnswerChosen.push(funcQuestionArray[index].correct_answers)
 
 }
 //creating function that makes "Next Button" appear after an answer is clicked
 let showButton = function(){
-    if(funcQuestionArray[0].correctAnswerClicked==1 || funcQuestionArray[0].incorrectAnswerClicked ==1){
+    if(funcQuestionArray[index].correctAnswerClicked==1 || funcQuestionArray[index].incorrectAnswerClicked ==1){
         let questionHolder = document.getElementById('buttonHolder')
         let questionButton= document.createElement('button')
         questionHolder.appendChild(questionButton)
@@ -148,7 +148,7 @@ let oneChoice =function(){
 let correct_Clicked = function(e) {
     correctResponse();
     oneChoice();
-    funcQuestionArray[0].correctAnswerClicked= funcQuestionArray[0].correctAnswerClicked + 1
+    funcQuestionArray[index].correctAnswerClicked= funcQuestionArray[index].correctAnswerClicked + 1
     showButton();
 
 }   
@@ -158,7 +158,7 @@ let correct_Clicked = function(e) {
 let incorrect_Clicked = function(e) {
     incorrectResponse();
     oneChoice();
-    funcQuestionArray[0].incorrectAnswerClicked=funcQuestionArray[0].incorrectAnswerClicked +1
+    funcQuestionArray[index].incorrectAnswerClicked=funcQuestionArray[index].incorrectAnswerClicked +1
     showButton();
 
 }   
